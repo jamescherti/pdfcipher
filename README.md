@@ -16,6 +16,8 @@ pip install --user pdfcipher
 
 (Omitting the `--user` flag will install *pdfcipher* system-wide in `/usr/local/bin/`.)
 
+## Usage
+
 ### Encrypt
 
 Encrypt PDF files with password protection:
