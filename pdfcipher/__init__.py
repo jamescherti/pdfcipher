@@ -82,7 +82,7 @@ class Qpdf:
 
     def _run_qpdf(self, args: list[str]):
         try:
-            # stdout subprocess to devnull to prevent it from printing:
+            # stdout subprocess to DEVNULL to prevent it from printing:
             # WARNING: file.pdf (object 2032 0, offset 470342): dictionary has
             # duplicated key /Author; last occurrence overrides earlier ones
             # qpdf: operation succeeded with warnings; resulting file may have
