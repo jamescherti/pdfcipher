@@ -17,7 +17,7 @@ pip install --user pdfcipher
 
 ## Usage
 
-Encrypt PDF files:
+Encrypt PDF files with password protection:
 ```
 pdfcipher enc file1.pdf file2.pdf file3.pdf
 ```
