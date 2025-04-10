@@ -41,3 +41,4 @@ You should have received a copy of the GNU General Public License along with thi
 ## Links
 
 - [pdfcipher @GitHub](https://github.com/jamescherti/pdfcipher)
+- [pdfcipher @PyPI](https://pypi.org/project/pdfcipher/)
