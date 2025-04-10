@@ -1,6 +1,6 @@
 [project]
 name = "pdfcipher"
-version = "1.0.0"
+version = "1.0.1"
 description = "A command-line tool for encrypting and decrypting PDF files with password protection."
 readme = "README.md"
 requires-python = ">=3.6, <4"
