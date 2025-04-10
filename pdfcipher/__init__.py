@@ -146,8 +146,10 @@ def pdfcypher_cli(mode: int, files: list):
 def parse_args():
     """Parse command-line arguments for encryption or decryption actions."""
     usage = "%(prog)s [--option] [args]"
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0],
-                                     usage=usage)
+    parser = argparse.ArgumentParser(
+        description=("A command-line tool for encrypting and decrypting PDF "
+                     "files with password protection."),
+        usage=usage)
 
     parser.add_argument("action", type=str, choices=["enc", "dec"],
                         help="Action: 'enc' for encrypt or 'dec' for decrypt")

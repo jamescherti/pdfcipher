@@ -1,4 +1,4 @@
-# pdfcipher - A command-line tool for encrypting and decrypting PDF files with password protection.
+# pdfcipher - A command-line tool for encrypting and decrypting PDF files with password protection
 
 The **pdfcipher** command-line tool enables encrypting and decrypting PDF files with robust password-based encryption. It allows users to set and remove passwords, ensuring secure access and distribution of PDF documents.
 
