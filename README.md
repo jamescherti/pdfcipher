@@ -2,6 +2,10 @@
 
 The **pdfcipher** command-line tool enables encrypting and decrypting PDF files with robust password-based encryption. It allows users to set and remove passwords, ensuring secure access and distribution of PDF documents.
 
+## Requirements
+
+- The [qpdf](https://github.com/qpdf/qpdf) command-line tool.
+
 ## Installation
 
 To install the *pdfcipher* executable locally in `~/.local/bin/using [pip](https://pypi.org/project/pip/), run:
