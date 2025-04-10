@@ -1,6 +1,6 @@
 # pdfcipher - A command-line tool for encrypting and decrypting PDF files with password protection.
 
-pdfcipher is a command-line tool for encrypting and decrypting PDF files using strong password-based encryption. It supports setting and removing passwords, ensuring secure document access and distribution.
+The **pdfcipher** command-line tool enables encrypting and decrypting PDF files with robust password-based encryption. It allows users to set and remove passwords, ensuring secure access and distribution of PDF documents.
 
 ## Installation
 
@@ -10,6 +10,18 @@ pip install --user git+https://github.com/jamescherti/pdfcipher
 ```
 
 (Omitting the `--user` flag will install *pdfcipher* system-wide in `/usr/local/bin/`.)
+
+## Usage
+
+Encrypt PDF files:
+```
+pdfcipher enc file1.pdf file2.pdf file3.pdf
+```
+
+Decrypt PDF files:
+```
+pdfcipher dec file1.pdf file2.pdf file3.pdf
+```
 
 ## License
 
