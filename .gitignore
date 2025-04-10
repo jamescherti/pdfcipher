@@ -1,5 +1,5 @@
 /build
 /dist
-/pathaction.egg-info
+/pdfcipher.egg-info
 *.pyc
 */__pycache__

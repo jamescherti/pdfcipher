@@ -6,7 +6,7 @@ The **pdfcipher** command-line tool enables encrypting and decrypting PDF files 
 
 To install the *pdfcipher* executable locally in `~/.local/bin/using [pip](https://pypi.org/project/pip/), run:
 ```
-pip install --user git+https://github.com/jamescherti/pdfcipher
+pip install --user pdfcipher
 ```
 
 (Omitting the `--user` flag will install *pdfcipher* system-wide in `/usr/local/bin/`.)
