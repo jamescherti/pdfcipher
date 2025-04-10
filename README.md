@@ -25,7 +25,7 @@ Encrypt PDF files with password protection:
 pdfcipher enc file1.pdf file2.pdf file3.pdf
 ```
 
-The tool will prompt the user to enter a password, which will then be used to encrypt all the specified PDF files:
+The *pdfcipher* tool will prompt the user to enter a password, which will then be used to encrypt all the specified PDF files:
 
 ### Decrypt
 
@@ -34,7 +34,7 @@ Decrypt PDF files by entering the password used for encryption:
 pdfcipher dec file1.pdf file2.pdf file3.pdf
 ```
 
-If the entered password is correct, the tool will attempt to use it for all the other files. If any file fails to be decrypted, the tool will prompt you to re-enter the password for convenience:
+If the entered password is correct, the tool will attempt to use it to decrypt all the other files. If any file fails to be decrypted, the tool will prompt you to re-enter the password for convenience.
 
 ## License
 
