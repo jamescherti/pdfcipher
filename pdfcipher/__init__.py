@@ -29,7 +29,7 @@ from .qpdf import Qpdf
 from .vars import FLAG_MODE_DECRYPT, FLAG_MODE_ENCRYPT
 
 
-def pdfcypher_run(mode: int, files: list):
+def pdfcypher_run(mode: int, file_or_dirs: list):
     if mode == FLAG_MODE_ENCRYPT:
         password = input_password()
         password2 = input_password("Re-enter the password for confirmation: ")
@@ -41,21 +41,19 @@ def pdfcypher_run(mode: int, files: list):
 
     pdf = Qpdf()
 
-    for input_file in files:
-        output_file = input_file
-
+    for file in file_or_dirs:
         if mode == FLAG_MODE_ENCRYPT:
-            print("[ENCRYPT]", input_file)
+            print("[ENCRYPT]", file)
         else:
-            print("[DECRYPT]", input_file)
+            print("[DECRYPT]", file)
 
         current_password = password
         while True:
             try:
                 if mode == FLAG_MODE_ENCRYPT:
-                    pdf.encrypt(input_file, output_file, current_password)
+                    pdf.encrypt(file, file, current_password)
                 else:
-                    pdf.decrypt(input_file, output_file, current_password)
+                    pdf.decrypt(file, file, current_password)
             except subprocess.CalledProcessError as err:
                 if err.returncode == 2:
                     # The exit-code 2 means that the password is invalid
@@ -80,7 +78,7 @@ def parse_args():
     parser.add_argument("action", type=str, choices=["enc", "dec"],
                         help="Action: 'enc' for encrypt or 'dec' for decrypt")
 
-    parser.add_argument("pdf_files", metavar="N", type=str, nargs="+",
+    parser.add_argument("files_or_dirs", metavar="N", type=str, nargs="+",
                         help="PDF files to encrypt or decrypt")
 
     return parser.parse_args()
@@ -93,9 +91,9 @@ def command_line_interface():
 
     args = parse_args()
     if args.action == "enc":
-        pdfcypher_run(FLAG_MODE_ENCRYPT, args.pdf_files)
+        pdfcypher_run(FLAG_MODE_ENCRYPT, args.files_or_dirs)
     elif args.action == "dec":
-        pdfcypher_run(FLAG_MODE_DECRYPT, args.pdf_files)
+        pdfcypher_run(FLAG_MODE_DECRYPT, args.files_or_dirs)
 
 
 if __name__ == "__main__":
