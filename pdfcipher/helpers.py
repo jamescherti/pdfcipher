@@ -23,10 +23,10 @@ import sys
 from getpass import getpass
 
 
-def input_password():
+def input_password(prompt: str = "Password: "):
     while True:
         try:
-            password = getpass("Password: ")
+            password = getpass(prompt)
         except (KeyboardInterrupt, EOFError):
             sys.exit(1)
 

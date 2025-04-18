@@ -30,7 +30,15 @@ from .vars import FLAG_MODE_DECRYPT, FLAG_MODE_ENCRYPT
 
 
 def pdfcypher_run(mode: int, files: list):
-    password = input_password()
+    if mode == FLAG_MODE_ENCRYPT:
+        password = input_password()
+        password2 = input_password("Re-enter the password for confirmation: ")
+        if password != password2:
+            print("Error: Passwords do not match.", file=sys.stderr)
+            sys.exit(1)
+    else:
+        password = input_password()
+
     pdf = Qpdf()
 
     for input_file in files:
