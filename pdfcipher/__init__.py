@@ -23,13 +23,37 @@ import argparse
 import logging
 import subprocess
 import sys
+from pathlib import Path
 
 from .helpers import input_password
 from .qpdf import Qpdf
 from .vars import FLAG_MODE_DECRYPT, FLAG_MODE_ENCRYPT
 
 
-def pdfcypher_run(mode: int, file_or_dirs: list):
+def collect_pdfs(list_paths: list):
+    """Return a list of all PDF files found in the given list of paths.
+
+    :param list_paths: A list of file or directory paths as strings or Path
+    objects.
+    :return: A list of Path objects representing PDF files.
+    """
+    pdfs = []
+    for path in list_paths:
+        path = Path(path)
+        if path.is_file() and path.suffix.lower() == ".pdf":
+            pdfs.append(path)
+        elif path.is_dir():
+            pdfs.extend(path.rglob("*.pdf"))
+        else:
+            print(
+                f"Error: Not a file or directory: {path}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+    return pdfs
+
+
+def pdfcypher_run(mode: int, files_or_dirs: list):
     if mode == FLAG_MODE_ENCRYPT:
         password = input_password()
         password2 = input_password("Re-enter the password for confirmation: ")
@@ -41,7 +65,7 @@ def pdfcypher_run(mode: int, file_or_dirs: list):
 
     pdf = Qpdf()
 
-    for file in file_or_dirs:
+    for file in collect_pdfs(files_or_dirs):
         if mode == FLAG_MODE_ENCRYPT:
             print("[ENCRYPT]", file)
         else:
