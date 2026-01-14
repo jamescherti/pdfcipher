@@ -38,7 +38,7 @@ If the entered password is correct, the tool will attempt to use it to decrypt a
 
 ## License
 
-Copyright (c) 2023-2025 [James Cherti](https://www.jamescherti.com)
+Copyright (c) 2023-2026 [James Cherti](https://www.jamescherti.com)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
