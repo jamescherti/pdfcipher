@@ -18,7 +18,6 @@
 #
 """Helpers."""
 
-
 import sys
 from getpass import getpass
 
