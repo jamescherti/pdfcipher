@@ -18,7 +18,6 @@
 #
 """The entry-point of pdfcipher."""
 
-
 import argparse
 import logging
 import subprocess
@@ -83,9 +82,11 @@ def pdfcypher_run(mode: int, files_or_dirs: list):
                     # The exit-code 2 means that the password is invalid
                     current_password = input_password()
                 else:
-                    print("Error: qpdf returned non-zero exit code",
-                          err.returncode,
-                          file=sys.stderr)
+                    print(
+                        "Error: qpdf returned non-zero exit code",
+                        err.returncode,
+                        file=sys.stderr,
+                    )
                     sys.exit(1)
             else:
                 break
@@ -95,23 +96,36 @@ def parse_args():
     """Parse command-line arguments for encryption or decryption actions."""
     usage = "%(prog)s [--option] [args]"
     parser = argparse.ArgumentParser(
-        description=("A command-line tool for encrypting and decrypting PDF "
-                     "files with password protection."),
-        usage=usage)
+        description=(
+            "A command-line tool for encrypting and decrypting PDF "
+            "files with password protection."
+        ),
+        usage=usage,
+    )
 
-    parser.add_argument("action", type=str, choices=["enc", "dec"],
-                        help="Action: 'enc' for encrypt or 'dec' for decrypt")
+    parser.add_argument(
+        "action",
+        type=str,
+        choices=["enc", "dec"],
+        help="Action: 'enc' for encrypt or 'dec' for decrypt",
+    )
 
-    parser.add_argument("files_or_dirs", metavar="N", type=str, nargs="+",
-                        help="PDF files to encrypt or decrypt")
+    parser.add_argument(
+        "files_or_dirs",
+        metavar="N",
+        type=str,
+        nargs="+",
+        help="PDF files to encrypt or decrypt",
+    )
 
     return parser.parse_args()
 
 
 def command_line_interface():
     """The command-line interface."""
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout,
-                        format="[INFO] %(name)s: %(message)s")
+    logging.basicConfig(
+        level=logging.INFO, stream=sys.stdout, format="[INFO] %(name)s: %(message)s"
+    )
 
     args = parse_args()
     if args.action == "enc":
