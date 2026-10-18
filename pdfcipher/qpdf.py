@@ -18,7 +18,6 @@
 #
 """Encrypt/Decrypt PDF files using qpdf."""
 
-
 import logging
 import os
 import shutil
@@ -36,26 +35,29 @@ class Qpdf:
         self.qpdf_cmd = QPDF_BIN
         self._logger = logging.getLogger(sys.argv[0])
 
-    def decrypt(self, input_file: os.PathLike,
-                output_file: os.PathLike,
-                password: str):
-        self._generic_qpdf_encdec(input_file=input_file,
-                                  output_file=output_file,
-                                  password=password,
-                                  mode=FLAG_MODE_DECRYPT)
+    def decrypt(self, input_file: os.PathLike, output_file: os.PathLike, password: str):
+        self._generic_qpdf_encdec(
+            input_file=input_file,
+            output_file=output_file,
+            password=password,
+            mode=FLAG_MODE_DECRYPT,
+        )
 
-    def encrypt(self, input_file: os.PathLike,
-                output_file: os.PathLike,
-                password: str):
-        self._generic_qpdf_encdec(input_file=input_file,
-                                  output_file=output_file,
-                                  password=password,
-                                  mode=FLAG_MODE_ENCRYPT)
+    def encrypt(self, input_file: os.PathLike, output_file: os.PathLike, password: str):
+        self._generic_qpdf_encdec(
+            input_file=input_file,
+            output_file=output_file,
+            password=password,
+            mode=FLAG_MODE_ENCRYPT,
+        )
 
-    def _generic_qpdf_encdec(self, input_file: os.PathLike,
-                             output_file: os.PathLike,
-                             mode: int,
-                             password: str):
+    def _generic_qpdf_encdec(
+        self,
+        input_file: os.PathLike,
+        output_file: os.PathLike,
+        mode: int,
+        password: str,
+    ):
         tmp_path = None
         try:
             _, tmp_path = tempfile.mkstemp(prefix="pdfcipher", suffix=".pdf")
@@ -63,14 +65,25 @@ class Qpdf:
             if mode == FLAG_MODE_ENCRYPT:
                 read_password = password
                 owner_password = password
-                qpdf_args = ["--encrypt", read_password, owner_password, "256",
-                             "--", str(input_file), str(tmp_path)]
+                qpdf_args = [
+                    "--encrypt",
+                    read_password,
+                    owner_password,
+                    "256",
+                    "--",
+                    str(input_file),
+                    str(tmp_path),
+                ]
             elif mode == FLAG_MODE_DECRYPT:
-                qpdf_args = ["--decrypt", f"--password={password}",
-                             "--", str(input_file), str(tmp_path)]
+                qpdf_args = [
+                    "--decrypt",
+                    f"--password={password}",
+                    "--",
+                    str(input_file),
+                    str(tmp_path),
+                ]
             else:
-                raise ValueError("Mode can only be MODE_ENCRYPT or "
-                                 "MODE_DECRYPT")
+                raise ValueError("Mode can only be MODE_ENCRYPT or MODE_DECRYPT")
 
             self._run_qpdf(qpdf_args)
             shutil.copy(tmp_path, output_file)
