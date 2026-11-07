@@ -2,7 +2,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 - Author: James Cherti <[https://www.jamescherti.com/](https://www.jamescherti.com/)>
-- License: GPL
+- License: GPL 3.0 or later
 
 The **[pdfcipher](https://github.com/jamescherti/pdfcipher)** command-line tool enables encrypting and decrypting PDF files with password-based encryption. It allows setting and removing passwords, ensuring secure access and distribution of PDF documents.
 
