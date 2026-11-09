@@ -14,6 +14,8 @@ classifiers = [
     "Environment :: Console",
     "Operating System :: POSIX :: Linux",
     "Operating System :: POSIX :: Other",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: OS Independent",
     "Intended Audience :: Developers",
     "Intended Audience :: System Administrators",
     "Intended Audience :: End Users/Desktop",
