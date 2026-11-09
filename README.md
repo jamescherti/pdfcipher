@@ -1,5 +1,8 @@
 # pdfcipher - A command-line tool for encrypting and decrypting PDF files with password protection
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![PyPI Version](https://img.shields.io/pypi/v/pdfcipher.svg)](https://pypi.org/project/pdfcipher/)
+![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)
+![macOS](https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white)
 
 - Author: James Cherti <[https://www.jamescherti.com/](https://www.jamescherti.com/)>
 - License: GPL 3.0 or later
