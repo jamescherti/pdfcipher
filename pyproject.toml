@@ -3,16 +3,14 @@ name = "pdfcipher"
 version = "1.0.2"
 description = "A command-line tool for encrypting and decrypting PDF files with password protection."
 readme = "README.md"
-requires-python = ">=3.6, <4"
-license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.10, <4"
+license = "GPL-3.0-or-later"
 authors = [
     { name = "James Cherti" }
 ]
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "License :: OSI Approved :: GNU General Public License (GPL)",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Environment :: Console",
     "Operating System :: POSIX :: Linux",
     "Operating System :: POSIX :: Other",

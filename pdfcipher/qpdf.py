@@ -117,7 +117,7 @@ class Qpdf:
             # duplicated key /Author; last occurrence overrides earlier ones
             # qpdf: operation succeeded with warnings; resulting file may have
             # some problems
-            cmd = [self.qpdf_cmd] + args
+            cmd = [self.qpdf_cmd, *args]
             self._logger.debug("[RUN] %s", subprocess.list2cmdline(cmd))
             subprocess.check_call(cmd, stdout=subprocess.DEVNULL)
         except subprocess.CalledProcessError as err:
