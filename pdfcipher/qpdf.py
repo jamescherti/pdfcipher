@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright (c) 2023-2026 James Cherti
 # URL: https://github.com/jamescherti/pdfcipher
@@ -24,6 +24,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 
 from .vars import FLAG_MODE_DECRYPT, FLAG_MODE_ENCRYPT
 
@@ -31,11 +32,20 @@ QPDF_BIN = "qpdf"
 
 
 class Qpdf:
-    def __init__(self):
+    """Wrapper around the qpdf command-line utility."""
+
+    def __init__(self) -> None:
+        """Initialize the Qpdf wrapper."""
         self.qpdf_cmd = QPDF_BIN
         self._logger = logging.getLogger(sys.argv[0])
 
-    def decrypt(self, input_file: os.PathLike, output_file: os.PathLike, password: str):
+    def decrypt(
+        self,
+        input_file: str | Path,
+        output_file: str | Path,
+        password: str,
+    ) -> None:
+        """Decrypt a PDF file using the provided password."""
         self._generic_qpdf_encdec(
             input_file=input_file,
             output_file=output_file,
@@ -43,7 +53,13 @@ class Qpdf:
             mode=FLAG_MODE_DECRYPT,
         )
 
-    def encrypt(self, input_file: os.PathLike, output_file: os.PathLike, password: str):
+    def encrypt(
+        self,
+        input_file: str | Path,
+        output_file: str | Path,
+        password: str,
+    ) -> None:
+        """Encrypt a PDF file using the provided password."""
         self._generic_qpdf_encdec(
             input_file=input_file,
             output_file=output_file,
@@ -53,14 +69,17 @@ class Qpdf:
 
     def _generic_qpdf_encdec(
         self,
-        input_file: os.PathLike,
-        output_file: os.PathLike,
+        input_file: str | Path,
+        output_file: str | Path,
         mode: int,
         password: str,
-    ):
-        tmp_path = None
+    ) -> None:
+        tmp_path: Path | None = None
         try:
-            _, tmp_path = tempfile.mkstemp(prefix="pdfcipher", suffix=".pdf")
+            # Close the file descriptor returned by mkstemp to prevent FD leaks.
+            fd, raw_tmp_path = tempfile.mkstemp(prefix="pdfcipher", suffix=".pdf")
+            os.close(fd)
+            tmp_path = Path(raw_tmp_path)
 
             if mode == FLAG_MODE_ENCRYPT:
                 read_password = password
@@ -88,10 +107,10 @@ class Qpdf:
             self._run_qpdf(qpdf_args)
             shutil.copy(tmp_path, output_file)
         finally:
-            if tmp_path and os.path.exists(tmp_path):
-                os.remove(tmp_path)
+            if tmp_path is not None:
+                tmp_path.unlink(missing_ok=True)
 
-    def _run_qpdf(self, args: list[str]):
+    def _run_qpdf(self, args: list[str]) -> None:
         try:
             # stdout subprocess to DEVNULL to prevent it from printing:
             # WARNING: file.pdf (object 2032 0, offset 470342): dictionary has

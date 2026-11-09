@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright (c) 2023-2026 James Cherti
 # URL: https://github.com/jamescherti/pdfcipher
@@ -29,20 +29,25 @@ from .qpdf import Qpdf
 from .vars import FLAG_MODE_DECRYPT, FLAG_MODE_ENCRYPT
 
 
-def collect_pdfs(list_paths: list):
+def collect_pdfs(list_paths: list[str | Path]) -> list[Path]:
     """Return a list of all PDF files found in the given list of paths.
 
     :param list_paths: A list of file or directory paths as strings or Path
     objects.
     :return: A list of Path objects representing PDF files.
     """
-    pdfs = []
-    for path in list_paths:
-        path = Path(path)
+    pdfs: list[Path] = []
+    for raw_path in list_paths:
+        path = Path(raw_path)
         if path.is_file() and path.suffix.lower() == ".pdf":
             pdfs.append(path)
         elif path.is_dir():
-            pdfs.extend(path.rglob("*.pdf"))
+            # Match files case-insensitively and exclude directories named *.pdf.
+            pdfs.extend(
+                path
+                for path in path.rglob("*")
+                if path.is_file() and path.suffix.lower() == ".pdf"
+            )
         else:
             print(
                 f"Error: Not a file or directory: {path}",
@@ -52,7 +57,14 @@ def collect_pdfs(list_paths: list):
     return pdfs
 
 
-def pdfcypher_run(mode: int, files_or_dirs: list):
+def pdfcypher_run(mode: int, files_or_dirs: list[str | Path]) -> None:
+    """Encrypt or decrypt the PDF files found in the given paths."""
+    # Collect and validate PDF paths before prompting the user for a password.
+    pdf_files = collect_pdfs(files_or_dirs)
+    if not pdf_files:
+        print("Error: No PDF files found.", file=sys.stderr)
+        sys.exit(1)
+
     if mode == FLAG_MODE_ENCRYPT:
         password = input_password()
         password2 = input_password("Re-enter the password for confirmation: ")
@@ -64,7 +76,7 @@ def pdfcypher_run(mode: int, files_or_dirs: list):
 
     pdf = Qpdf()
 
-    for file in collect_pdfs(files_or_dirs):
+    for file in pdf_files:
         if mode == FLAG_MODE_ENCRYPT:
             print("[ENCRYPT]", file)
         else:
@@ -77,8 +89,17 @@ def pdfcypher_run(mode: int, files_or_dirs: list):
                     pdf.encrypt(file, file, current_password)
                 else:
                     pdf.decrypt(file, file, current_password)
+            # Catch FileNotFoundError when the qpdf executable is not installed.
+            except FileNotFoundError:
+                print(
+                    "Error: 'qpdf' command not found. Please install qpdf.",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
             except subprocess.CalledProcessError as err:
-                if err.returncode == 2:
+                # Only re-prompt on exit code 2 during decryption; during encryption,
+                # exit code 2 indicates the source PDF is already password-protected.
+                if err.returncode == 2 and mode == FLAG_MODE_DECRYPT:
                     # The exit-code 2 means that the password is invalid
                     current_password = input_password()
                 else:
@@ -92,7 +113,7 @@ def pdfcypher_run(mode: int, files_or_dirs: list):
                 break
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     """Parse command-line arguments for encryption or decryption actions."""
     usage = "%(prog)s [--option] [args]"
     parser = argparse.ArgumentParser(
@@ -121,8 +142,9 @@ def parse_args():
     return parser.parse_args()
 
 
-def command_line_interface():
-    """The command-line interface."""
+# Add return type annotation for mypy compatibility.
+def command_line_interface() -> None:
+    """Run the command-line interface."""
     logging.basicConfig(
         level=logging.INFO, stream=sys.stdout, format="[INFO] %(name)s: %(message)s"
     )

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright (c) 2023-2026 James Cherti
 # URL: https://github.com/jamescherti/pdfcipher
@@ -22,7 +22,8 @@ import sys
 from getpass import getpass
 
 
-def input_password(prompt: str = "Password: "):
+def input_password(prompt: str = "Password: ") -> str:
+    """Prompt the user for a non-empty password."""
     while True:
         try:
             password = getpass(prompt)
